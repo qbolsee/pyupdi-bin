@@ -64,7 +64,6 @@ jobs:
        run: |
          pip install -r requirements.txt -r requirements_build.txt
          pip install -e .
-         echo test$GITHUB_REF.test
      - name: Run PyInstaller
        run: |
          python -m PyInstaller.__main__ -F -n pyupdi-bin updi/pyupdi.py
@@ -96,8 +95,7 @@ jobs:
       - name: Move app
         run: |
           mv dist/pyupdi-bin dist/pyupdi-bin-macOS.app
-          zip dist/pyupdi-bin-macOS.zip dist/pyupdi-bin-macOS.app
       - uses: actions/upload-artifact@v2
         with:
           name: macOS
-          path: dist/pyupdi-bin-macOS.zip
+          path: dist/pyupdi-bin-macOS.app
