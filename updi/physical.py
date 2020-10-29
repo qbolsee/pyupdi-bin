@@ -13,7 +13,7 @@ class UpdiPhysical(object):
         PDI physical driver using a given COM port at a given baud
     """
 
-    def __init__(self, port, baud=115200):
+    def __init__(self, port, baud=115200, chunk=48):
         """
             Initialise the COM port
         """
@@ -73,12 +73,18 @@ class UpdiPhysical(object):
             Sends a char array to UPDI with NO inter-byte delay
             Note that the byte will echo back
         """
-        self.logger.info("send %d bytes", len(command))
-        self._loginfo("data: ", command)
+        if len(command) > self.chunk:
+            i = 0
+            while i < len(command):
+                self.send(command[i:i+self.chunk])
+                i += self.chunk
+        else:
+            self.logger.info("send %d bytes", len(command))
+            self._loginfo("data: ", command)
 
-        self.ser.write(command)
-        # it will echo back.
-        echo = self.ser.read(len(command))
+            self.ser.write(command)
+            # it will echo back.
+            echo = self.ser.read(len(command))
 
     def receive(self, size):
         """
