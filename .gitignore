@@ -28,3 +28,5 @@ MANIFEST
 *.manifest
 *.spec
 
+# for future test
+.github/workflows/release.yml

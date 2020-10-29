@@ -49,7 +49,7 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: Windows-x86
-          path: dist/pyupdi-bin-x86.exe
+          path: dist/pyupdi-bin.exe
 
   build-ubuntu:
     runs-on: ubuntu-18.04
@@ -94,21 +94,9 @@ jobs:
         run: ls dist
       - name: Move app
         run: |
-          mv dist/pyupdi-bin dist/pyupdi-bin-dev-macOS.app
+          mv dist/pyupdi-bin dist/pyupdi-bin-macOS.app
+          zip dist/pyupdi-bin-macOS.zip dist/pyupdi-bin-macOS.app
       - uses: actions/upload-artifact@v2
         with:
           name: macOS
-          path: dist/
-
-  release-test:
-    runs-on: ubuntu-latest
-    needs: [build-windows, build-windows-x86, build-ubuntu, build-macos]
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Download artifacts
-        uses: actions/download-artifact@v2
-        with:
-          path: release/
-      - name: Display structure of downloaded files
-        run: ls -R
+          path: dist/pyupdi-bin-macOS.zip
