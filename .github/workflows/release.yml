@@ -2,7 +2,7 @@ name: Release workflow
 
 on:
   push:
-  tags:
+  pull_request:
 
 jobs:
   build-windows:
