@@ -21,8 +21,8 @@ class UpdiPhysical(object):
         self.logger = logging.getLogger("phy")
         self.port = port
         self.baud = baud
-        self.ser = None
         self.chunk = chunk
+        self.ser = None
         self.initialise_serial(self.port, self.baud)
         # send an initial break as handshake
         self.send([constants.UPDI_BREAK])
